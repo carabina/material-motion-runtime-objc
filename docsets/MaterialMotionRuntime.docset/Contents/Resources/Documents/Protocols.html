@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Protocols  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Protocols  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">MaterialMotionRuntime Docs</a> (58% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">MaterialMotionRuntime Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Protocols  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/MDMScheduler.html">MDMScheduler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MDMTransaction.html">MDMTransaction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/MDMSchedulerActivityState.html">MDMSchedulerActivityState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/MDMDelegatedPerforming.html">MDMDelegatedPerforming</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMPerforming.html">MDMPerforming</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMPlan.html">MDMPlan</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMPlanPerforming.html">MDMPlanPerforming</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMSchedulerDelegate.html">MDMSchedulerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Protocols</h1>
+            <p>The following protocols are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMPerforming"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMPerforming" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMPerforming">MDMPerforming</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class conforming to MDMPerforming is expected to implement the plan of motion described by objects
+that conform to MDMPlan.</p>
+
+                        <a href="Protocols/MDMPerforming.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMPerforming</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMPerforming</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMPlanPerforming"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMPlanPerforming" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMPlanPerforming">MDMPlanPerforming</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class conforming to this protocol will be provided with plan instances.</p>
+
+                        <a href="Protocols/MDMPlanPerforming.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMPlanPerforming</span> <span class="o">&lt;</span><span class="n">MDMPerforming</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMPlanPerforming</span> <span class="p">:</span> <span class="kt">MDMPerforming</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMDelegatedPerforming"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMDelegatedPerforming" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMDelegatedPerforming">MDMDelegatedPerforming</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class conforming to MDMDelegatedPerforming is expected to delegate execution to an external system.</p>
+
+                        <a href="Protocols/MDMDelegatedPerforming.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMDelegatedPerforming</span> <span class="o">&lt;</span><span class="n">MDMPerforming</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMDelegatedPerforming</span> <span class="p">:</span> <span class="kt">MDMPerforming</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMPlan"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMPlan" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMPlan">MDMPlan</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class conforming to MDMPlan is expected to describe a plan of motion for a target.</p>
+
+<p>Plans are translated into performers by an instance of MDMScheduler.</p>
+
+                        <a href="Protocols/MDMPlan.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMPlan</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMPlan</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMSchedulerDelegate"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMSchedulerDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMSchedulerDelegate">MDMSchedulerDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/MDMSchedulerDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-07-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
