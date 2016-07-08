@@ -13,7 +13,7 @@
     <a title="MaterialMotionRuntime  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MaterialMotionRuntime Docs</a> (58% documented)</p>
+        <p><a href="index.html">MaterialMotionRuntime Docs</a> (100% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -78,8 +78,181 @@
             
             <a href='#material-motion-objective-c-runtime' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='material-motion-objective-c-runtime'>Material Motion Objective-C Runtime</h1>
 
-<p>This repository contains experimental code. Nothing contained here is meant for
-production use.</p>
+<p>The Material Motion Runtime is a tool for describing motion declaratively.</p>
+<a href='#declarative-motion-aka-motion-as-data' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='declarative-motion-aka-motion-as-data'>Declarative motion, aka motion as data</h2>
+
+<p>This library does not do much on its own. What it does do, however, is enable the expression of
+motion as data.</p>
+
+<p>This library encourages you to describe motion as data, or what we call <em>plans</em>. Plans are committed
+to a <em>scheduler</em>. The scheduler then coordinates the creation of <em>performers</em>, objects responsible
+for translating plans into concrete execution.</p>
+<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
+<a href='#installation-with-cocoapods' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='installation-with-cocoapods'>Installation with CocoaPods</h3>
+
+<p>Add <code>MaterialMotionRuntime</code> to your <code>Podfile</code>:</p>
+<pre class="highlight plaintext"><code>pod 'MaterialMotionRuntime'
+</code></pre>
+
+<p>Then run the following command:</p>
+<pre class="highlight plaintext"><code>pod install
+</code></pre>
+<a href='#example-apps-unit-tests' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='example-apps-unit-tests'>Example apps/unit tests</h2>
+
+<p>To check out a local copy of the repo and run our example apps you can run the following commands:</p>
+<pre class="highlight plaintext"><code>git clone https://github.com/material-motion/material-motion-runtime-objc.git
+cd material-motion-runtime-objc
+pod install
+open MaterialMotionRuntime.xcworkspace
+</code></pre>
+<a href='#contributing' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='contributing'>Contributing</h2>
+
+<p>We welcome contributions!</p>
+
+<p>Check out our <a href="https://github.com/material-motion/material-motion-runtime-objc/milestones">upcoming milestones</a>.</p>
+
+<p>Learn more about <a href="https://material-motion.gitbooks.io/material-motion-team/content/">our team</a>,
+<a href="https://material-motion.gitbooks.io/material-motion-team/content/community/">our community</a>, and
+our <a href="https://material-motion.gitbooks.io/material-motion-team/content/essentials/">contributor essentials</a>.</p>
+<a href='#architecture' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='architecture'>Architecture</h2>
+
+<p>This library defines two protocols:</p>
+
+<ul>
+<li>MDMPlan</li>
+<li>MDMPerforming</li>
+</ul>
+
+<p>and provides two object implementations:</p>
+
+<ul>
+<li>MDMTransaction</li>
+<li>MDMScheduler</li>
+</ul>
+
+<p>Learn more about these APIs by reading our <a href="https://material-motion.gitbooks.io/material-motion-starmap/content/specifications/runtime/">Starmap</a>.</p>
+<a href='#life-of-a-plan-objective-c' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='life-of-a-plan-objective-c'>Life of a plan: Objective-C</h3>
+
+<p>The first step to describing motion declaratively is to define your plans.</p>
+
+<p>Let&rsquo;s say we want to describe a view as <q>draggable</q>.</p>
+<a href='#step-1-define-the-plan' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-1-define-the-plan'>Step 1: Define the plan</h4>
+
+<p>First, we create a new file pair called Draggable.h/m.</p>
+
+<p>In Draggable.h:</p>
+<pre class="highlight objective_c"><code><span class="k">@import</span> <span class="n">MaterialMotionRuntime</span><span class="p">;</span>
+
+<span class="k">@interface</span> <span class="nc">Draggable</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">MDMPlan</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+</code></pre>
+
+<p>In Draggable.m:</p>
+<pre class="highlight objective_c"><code><span class="k">@implementation</span> <span class="nc">Draggable</span>
+<span class="k">@end</span>
+</code></pre>
+<a href='#step-2-define-the-performer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-2-define-the-performer'>Step 2: Define the performer</h4>
+
+<p>We now define the performer object that will fulfill our Draggable plan.</p>
+
+<p>We map the plan to the performer by implementing the <code>performerClass</code> method on the plan.</p>
+
+<p>In Draggable.m:</p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">DraggablePerformer</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">MDMPerforming</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">Draggable</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">Class</span><span class="p">)</span><span class="n">performerClass</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">DraggablePerformer</span> <span class="nf">class</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">DraggablePerformer</span>
+<span class="k">@end</span>
+</code></pre>
+<a href='#step-3-implement-the-performer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-3-implement-the-performer'>Step 3: Implement the performer</h4>
+
+<p>We start by implementing the required <code>initWithTarget:</code> initializer from MDMPerforming. In this
+initializer we register a pan gesture recognizer with the view.</p>
+
+<blockquote>
+<p>In practice we&rsquo;ll usually want to provide the gesture recognizer to the performer via the plan.
+This allows the creator of the plan to also pick which view the gesture recognizer is attached to.</p>
+</blockquote>
+
+<p>In Draggable.m:</p>
+<pre class="highlight objective_c"><code><span class="k">@implementation</span> <span class="nc">DraggablePerformer</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithTarget</span><span class="p">:(</span><span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">target</span> <span class="p">{</span>
+  <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">UIPanGestureRecognizer</span> <span class="o">*</span><span class="n">pan</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIPanGestureRecognizer</span> <span class="nf">new</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">pan</span> <span class="nf">addTarget</span><span class="p">:</span><span class="n">self</span> <span class="nf">action</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">gestureDidChange</span><span class="p">:)];</span>
+    <span class="p">[</span><span class="n">target</span> <span class="nf">addGestureRecognizer</span><span class="p">:</span><span class="n">pan</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p>We also implement the <code>gestureDidChange:</code> method. This method will be called whenever the user
+interacts with the target view.</p>
+
+<p>Note: The implementation shown below is only one of many ways such a performer could be implemented.</p>
+
+<p>In Draggable.m:</p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">DraggablePerformer</span> <span class="p">()</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">CGPoint</span> <span class="n">initialGestureLocation</span><span class="p">;</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">CGPoint</span> <span class="n">initialTargetPosition</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">gestureDidChange</span><span class="o">:</span><span class="p">(</span><span class="n">UIGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="n">gesture</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">gesture</span><span class="p">.</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">UIGestureRecognizerStateBegan</span><span class="p">:</span>
+      <span class="n">self</span><span class="p">.</span><span class="n">initialGestureLocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">gesture</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">superview</span><span class="p">];</span>
+      <span class="n">self</span><span class="p">.</span><span class="n">initialTargetPosition</span> <span class="o">=</span> <span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="n">UIGestureRecognizerStateChanged</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">CGPoint</span> <span class="n">currentLocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">gesture</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">superview</span><span class="p">];</span>
+      <span class="n">CGVector</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">CGVectorMake</span><span class="p">(</span><span class="n">currentLocation</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">initialGestureLocation</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+                                    <span class="n">currentLocation</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">initialGestureLocation</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+      <span class="n">CGPoint</span> <span class="n">newPosition</span> <span class="o">=</span> <span class="n">CGPointMake</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">initialTargetPosition</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">delta</span><span class="p">.</span><span class="n">dx</span><span class="p">,</span>
+                                        <span class="n">self</span><span class="p">.</span><span class="n">initialTargetPosition</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">delta</span><span class="p">.</span><span class="n">dy</span><span class="p">);</span>
+      <span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">newPosition</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">default</span><span class="o">:</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#step-4-associate-plans-with-views' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-4-associate-plans-with-views'>Step 4: Associate plans with views</h4>
+
+<p>Create and retain a reference to a scheduler, likely in your view controller:</p>
+<pre class="highlight plaintext"><code>self.scheduler = [MDMScheduler new];
+</code></pre>
+
+<p>Create a transaction. Plans are added to transactions. Transactions are committed to schedulers.</p>
+<pre class="highlight plaintext"><code>MDMTransaction *transaction = [MDMTransaction new];
+[transaction addPlan:[Draggable new] toTarget:view];
+</code></pre>
+
+<p>Commit the transaction to the scheduler.</p>
+<pre class="highlight plaintext"><code>[self.scheduler commitTransaction:transaction];
+</code></pre>
+<a href='#step-5-test-it' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-5-test-it'>Step 5: Test it!</h4>
+
+<p>You can now drag your view around.</p>
+<a href='#next-steps' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='next-steps'>Next steps</h2>
+
+<ul>
+<li>Create your own family of plans/performers.</li>
+</ul>
 <a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
 
 <p>Licensed under the Apache 2.0 license. See LICENSE for details.</p>
@@ -87,7 +260,7 @@ production use.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-07-07)</p>
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-07-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

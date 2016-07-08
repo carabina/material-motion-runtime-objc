@@ -14,7 +14,7 @@
     <a title="MDMScheduler Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MaterialMotionRuntime Docs</a> (58% documented)</p>
+        <p><a href="../index.html">MaterialMotionRuntime Docs</a> (100% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -83,12 +83,80 @@
 
                 </div>
               </div>
-            <p>The MDMScheduler class coordinates the registration and execution of motion intent, as expressed by
-the MDMPlan type.</p>
+            <p>An instance of MDMScheduler acts as the mediating agent between plans and performers.</p>
+
+<p>Plans are objects that conform to the MDMPlan protocol.
+Performers are objects that conform to the MDMPerforming protocol.</p>
+
+<p><a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2></p>
+
+<p>Many MDMScheduler instances may be instantiated throughout the lifetime of an app.
+Generally-speaking, one scheduler is created per interaction. An interaction might be a transition,
+a one-off animation, or a complex multi-state interaction.</p>
+
+<p>To add plans to a scheduler you must create an instance of MDMTransaction. MDMTransaction captures
+a series of operations association plans with targets.</p>
+
+<p>Once a transaction is committed to a scheduler, the scheduler creates performer instances.
+Performers are expected to fulfill the described plans.</p>
+
+<p><a href='#lifecycle' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='lifecycle'>Lifecycle</h2></p>
+
+<p>When an instance of MDMScheduler is deallocated its performers will also be deallocated.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Committing%20transactions"></a>
+                <a name="//apple_ref/objc/Section/Committing transactions" class="dashAnchor"></a>
+                <a href="#/Committing%20transactions">
+                  <h3 class="section-name">Committing transactions</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MDMScheduler(im)commitTransaction:"></a>
+                    <a name="//apple_ref/objc/Method/-commitTransaction:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MDMScheduler(im)commitTransaction:">-commitTransaction:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Commits the provided transaction to the receiver.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">commitTransaction</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">MDMTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">commitTransaction</span><span class="p">(</span><span class="nv">transaction</span><span class="p">:</span> <span class="kt">MDMTransaction</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/State"></a>
+                <a name="//apple_ref/objc/Section/State" class="dashAnchor"></a>
+                <a href="#/State">
+                  <h3 class="section-name">State</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -126,38 +194,17 @@ the MDMPlan type.</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)MDMScheduler(im)commitTransaction:"></a>
-                    <a name="//apple_ref/objc/Method/-commitTransaction:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)MDMScheduler(im)commitTransaction:">-commitTransaction:</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Commits the provided transaction to the receiver.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">commitTransaction</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">MDMTransaction</span> <span class="o">*</span><span class="p">)</span><span class="nv">transaction</span><span class="p">;</span></code></pre>
-
-                        </div>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">commitTransaction</span><span class="p">(</span><span class="nv">transaction</span><span class="p">:</span> <span class="kt">MDMTransaction</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Delegated%20events"></a>
+                <a name="//apple_ref/objc/Section/Delegated events" class="dashAnchor"></a>
+                <a href="#/Delegated%20events">
+                  <h3 class="section-name">Delegated events</h3>
+                </a>
+              </div>
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -171,14 +218,19 @@ the MDMPlan type.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A scheduler delegate can listen to specific state change events.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">MDMScheduler</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">MDMSchedulerDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt">MDMSchedulerDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -190,7 +242,7 @@ the MDMPlan type.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-07-07)</p>
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-07-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
