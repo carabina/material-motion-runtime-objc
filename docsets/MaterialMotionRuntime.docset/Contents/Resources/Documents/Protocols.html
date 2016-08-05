@@ -53,6 +53,9 @@
                 <a href="Protocols/MDMDelegatedPerforming.html">MDMDelegatedPerforming</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols.html#/c:objc(pl)MDMDelegatedPerformingToken">MDMDelegatedPerformingToken</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/MDMPerforming.html">MDMPerforming</a>
               </li>
               <li class="nav-group-task">
@@ -69,6 +72,12 @@
           <li class="nav-group-name">
             <a href="Type Definitions.html">Type Definitions</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Type Definitions.html#/c:MDMPerforming.h@T@MDMDelegatedPerformanceTokenArgBlock">MDMDelegatedPerformanceTokenArgBlock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Type Definitions.html#/c:MDMPerforming.h@T@MDMDelegatedPerformanceTokenReturnBlock">MDMDelegatedPerformanceTokenReturnBlock</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -110,12 +119,12 @@ that conform to MDMPlan.</p>
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMPerforming</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">Performing</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v1.0.0/src/MDMPerforming.h#L23-L30">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L24-L31">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -146,12 +155,59 @@ that conform to MDMPlan.</p>
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMPlanPerforming</span> <span class="p">:</span> <span class="kt">MDMPerforming</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">PlanPerforming</span> <span class="p">:</span> <span class="kt">Performing</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v1.0.0/src/MDMPerforming.h#L36-L50">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L38-L53">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Delegated%20performing"></a>
+                <a name="//apple_ref/objc/Section/Delegated performing" class="dashAnchor"></a>
+                <a href="#/Delegated%20performing">
+                  <h3 class="section-name">Delegated performing</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMDelegatedPerformingToken"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMDelegatedPerformingToken" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMDelegatedPerformingToken">MDMDelegatedPerformingToken</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object conforming to MDMDelegatedPerformingToken represents a single unit of delegated
+performance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMDelegatedPerformingToken</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">DelegatedPerformingToken</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L62-L63">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -182,12 +238,12 @@ that conform to MDMPlan.</p>
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMDelegatedPerforming</span> <span class="p">:</span> <span class="kt">MDMPerforming</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">DelegatedPerforming</span> <span class="p">:</span> <span class="kt">Performing</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v1.0.0/src/MDMPerforming.h#L55-L73">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L77-L107">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -224,12 +280,12 @@ that conform to MDMPlan.</p>
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMPlan</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">Plan</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v1.0.0/src/MDMPlan.h#L24-L36">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPlan.h#L25-L37">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -265,12 +321,12 @@ MDMScheduler.</p>
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">MDMSchedulerDelegate</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">SchedulerDelegate</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v1.0.0/src/MDMScheduler.h#L89-L94">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMScheduler.h#L92-L97">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -280,7 +336,7 @@ MDMScheduler.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-07-08)</p>
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-08-05)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

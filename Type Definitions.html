@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Classes  Reference</title>
+    <title>Type Definitions  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,7 +10,7 @@
     
   </head>
   <body>
-    <a title="Classes  Reference"></a>
+    <a title="Type Definitions  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">MaterialMotionRuntime Docs</a> (100% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="index.html">MaterialMotionRuntime Reference</a>
         <img id="carat" src="img/carat.png" />
-        Classes  Reference
+        Type Definitions  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -85,19 +85,26 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Classes</h1>
-            <p>The following classes are available globally.</p>
+            <h1>Type Definitions</h1>
+            <p>The following type definitions are available globally.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Delegated%20performing"></a>
+                <a name="//apple_ref/objc/Section/Delegated performing" class="dashAnchor"></a>
+                <a href="#/Delegated%20performing">
+                  <h3 class="section-name">Delegated performing</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)MDMScheduler"></a>
-                    <a name="//apple_ref/objc/Class/MDMScheduler" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)MDMScheduler">MDMScheduler</a>
+                    <a name="/c:MDMPerforming.h@T@MDMDelegatedPerformanceTokenReturnBlock"></a>
+                    <a name="//apple_ref/objc/Alias/MDMDelegatedPerformanceTokenReturnBlock" class="dashAnchor"></a>
+                    <a class="token" href="#/c:MDMPerforming.h@T@MDMDelegatedPerformanceTokenReturnBlock">MDMDelegatedPerformanceTokenReturnBlock</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -105,58 +112,35 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An instance of MDMScheduler acts as the mediating agent between plans and performers.</p>
+                        <p>A block that returns a delegated performance token.</p>
 
-<p>Plans are objects that conform to the MDMPlan protocol.
-Performers are objects that conform to the MDMPerforming protocol.</p>
-
-<p><a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2></p>
-
-<p>Many MDMScheduler instances may be instantiated throughout the lifetime of an app.
-Generally-speaking, one scheduler is created per interaction. An interaction might be a transition,
-a one-off animation, or a complex multi-state interaction.</p>
-
-<p>To add plans to a scheduler you must create an instance of MDMTransaction. A transaction captures
-a series of operations that associate plans with targets.</p>
-
-<p>Once a transaction is committed to a scheduler, the scheduler creates performer instances.
-Performers are expected to fulfill the described plans.</p>
-
-<p><a href='#lifecycle' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='lifecycle'>Lifecycle</h2></p>
-
-<p>When an instance of MDMScheduler is deallocated its performers will also be deallocated.</p>
-
-                        <a href="Classes/MDMScheduler.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">MDMScheduler</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="k">typedef</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">MDMDelegatedPerformingToken</span><span class="o">&gt;</span> <span class="n">_Nullable</span> <span class="p">(</span>
+    <span class="o">^</span><span class="n">MDMDelegatedPerformanceTokenReturnBlock</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">class</span> <span class="kt">Scheduler</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">typealias</span> <span class="kt">DelegatedPerformanceTokenReturnBlock</span> <span class="o">=</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">DelegatedPerformingToken</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMScheduler.h#L61-L85">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L66-L67">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)MDMTransaction"></a>
-                    <a name="//apple_ref/objc/Class/MDMTransaction" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)MDMTransaction">MDMTransaction</a>
+                    <a name="/c:MDMPerforming.h@T@MDMDelegatedPerformanceTokenArgBlock"></a>
+                    <a name="//apple_ref/objc/Alias/MDMDelegatedPerformanceTokenArgBlock" class="dashAnchor"></a>
+                    <a class="token" href="#/c:MDMPerforming.h@T@MDMDelegatedPerformanceTokenArgBlock">MDMDelegatedPerformanceTokenArgBlock</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -164,26 +148,25 @@ Performers are expected to fulfill the described plans.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The MDMTransaction class acts as a register of operations that may be committed to an instance of
-MDMScheduler.</p>
+                        <p>A block that accepts a delegated performance token.</p>
 
-                        <a href="Classes/MDMTransaction.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">MDMTransaction</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">MDMDelegatedPerformanceTokenArgBlock</span><span class="p">)(</span>
+    <span class="n">id</span><span class="o">&lt;</span><span class="n">MDMDelegatedPerformingToken</span><span class="o">&gt;</span> <span class="n">_Nonnull</span><span class="p">)</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">class</span> <span class="kt">Transaction</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">typealias</span> <span class="kt">DelegatedPerformanceTokenArgBlock</span> <span class="o">=</span> <span class="p">(</span><span class="kt">DelegatedPerformingToken</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMTransaction.h#L26-L35">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L70-L71">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
