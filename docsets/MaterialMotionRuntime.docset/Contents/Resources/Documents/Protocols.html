@@ -50,10 +50,22 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Protocols/MDMComposablePerforming.html">MDMComposablePerforming</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMContinuousPerforming.html">MDMContinuousPerforming</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/MDMDelegatedPerforming.html">MDMDelegatedPerforming</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/c:objc(pl)MDMDelegatedPerformingToken">MDMDelegatedPerformingToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMIsActiveTokenGenerating.html">MDMIsActiveTokenGenerating</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMIsActiveTokenable.html">MDMIsActiveTokenable</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MDMPerforming.html">MDMPerforming</a>
@@ -66,6 +78,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MDMSchedulerDelegate.html">MDMSchedulerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMTransactionEmitting.html">MDMTransactionEmitting</a>
               </li>
             </ul>
           </li>
@@ -124,7 +139,7 @@ that conform to MDMPlan.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L24-L31">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L24-L31">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -160,7 +175,7 @@ that conform to MDMPlan.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L38-L53">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L39-L54">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -169,10 +184,226 @@ that conform to MDMPlan.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Delegated%20performing"></a>
-                <a name="//apple_ref/objc/Section/Delegated performing" class="dashAnchor"></a>
-                <a href="#/Delegated%20performing">
-                  <h3 class="section-name">Delegated performing</h3>
+                <a name="/Continuous%20performing"></a>
+                <a name="//apple_ref/objc/Section/Continuous performing" class="dashAnchor"></a>
+                <a href="#/Continuous%20performing">
+                  <h3 class="section-name">Continuous performing</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMContinuousPerforming"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMContinuousPerforming" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMContinuousPerforming">MDMContinuousPerforming</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A performer that conforms to MDMContinuousPerforming is able to request and release is-active
+tokens.</p>
+
+<p>The scheduler uses these tokens to inform its active state. If any performer owns an is-active
+token then the scheduler is active. Otherwise, the scheduler is idle.</p>
+
+<p>The performer should store a strong reference to the token generator. Request a token just before
+some continuous work is about to begin, such as adding an animation or starting a gesture
+recognizer. Release the token when the continuous work completes, such as when an animation
+reaches its resting state or when a gesture recognizer is ended or canceled.</p>
+
+                        <a href="Protocols/MDMContinuousPerforming.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMContinuousPerforming</span> <span class="o">&lt;</span><span class="n"><a href="Protocols/MDMPerforming.html">MDMPerforming</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">ContinuousPerforming</span> <span class="p">:</span> <span class="kt">Performing</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L73-L86">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMIsActiveTokenable"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMIsActiveTokenable" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMIsActiveTokenable">MDMIsActiveTokenable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A non-terminated is-active token is an indication that some continuous work is active.</p>
+
+<p>When the continuous work comes to an end, the token should be terminated by invoking terminate. The
+token must then be released. Any further attempts to invoke terminate will result in assertions.</p>
+
+<p>Tokens will terminate themselves on dealloc if they were not already terminated.</p>
+
+                        <a href="Protocols/MDMIsActiveTokenable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMIsActiveTokenable</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">IsActiveTokenable</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L97-L108">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMIsActiveTokenGenerating"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMIsActiveTokenGenerating" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMIsActiveTokenGenerating">MDMIsActiveTokenGenerating</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An is-active token generator is able to generate any number of MDMIsActiveToken instances.</p>
+
+                        <a href="Protocols/MDMIsActiveTokenGenerating.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMIsActiveTokenGenerating</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">IsActiveTokenGenerating</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L112-L123">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Composition"></a>
+                <a name="//apple_ref/objc/Section/Composition" class="dashAnchor"></a>
+                <a href="#/Composition">
+                  <h3 class="section-name">Composition</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMTransactionEmitting"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMTransactionEmitting" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMTransactionEmitting">MDMTransactionEmitting</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A transaction emitter allows a performer to commit new plans to a scheduler.</p>
+
+                        <a href="Protocols/MDMTransactionEmitting.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMTransactionEmitting</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">TransactionEmitting</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L129-L135">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)MDMComposablePerforming"></a>
+                    <a name="//apple_ref/objc/Protocol/MDMComposablePerforming" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMComposablePerforming">MDMComposablePerforming</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class conforming to MDMComposablePerforming is able to commit new plans.</p>
+
+                        <a href="Protocols/MDMComposablePerforming.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMComposablePerforming</span> <span class="o">&lt;</span><span class="n"><a href="Protocols/MDMPerforming.html">MDMPerforming</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">ComposablePerforming</span> <span class="p">:</span> <span class="kt">Performing</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L139-L149">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecated%20APIs"></a>
+                <a name="//apple_ref/objc/Section/Deprecated APIs" class="dashAnchor"></a>
+                <a href="#/Deprecated%20APIs">
+                  <h3 class="section-name">Deprecated APIs</h3>
                 </a>
               </div>
               <ul>
@@ -207,7 +438,7 @@ performance.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L62-L63">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L160">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -243,7 +474,7 @@ performance.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L77-L107">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L179-L193">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -275,17 +506,17 @@ performance.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMPlan</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMPlan</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="p">,</span> <span class="n">NSCopying</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">Plan</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">Plan</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span><span class="p">,</span> <span class="kt">NSCopying</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPlan.h#L25-L37">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPlan.h#L25-L37">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -326,7 +557,7 @@ MDMScheduler.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMScheduler.h#L92-L97">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMScheduler.h#L93-L98">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -336,8 +567,8 @@ MDMScheduler.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-08-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-09-20)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

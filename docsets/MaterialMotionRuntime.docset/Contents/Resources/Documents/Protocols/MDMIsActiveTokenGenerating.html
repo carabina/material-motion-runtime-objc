@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MDMPlan Protocol Reference</title>
+    <title>MDMIsActiveTokenGenerating Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/objc/Protocol/MDMPlan" class="dashAnchor"></a>
-    <a title="MDMPlan Protocol Reference"></a>
+    <a name="//apple_ref/objc/Protocol/MDMIsActiveTokenGenerating" class="dashAnchor"></a>
+    <a title="MDMIsActiveTokenGenerating Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MaterialMotionRuntime Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MaterialMotionRuntime Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MDMPlan Protocol Reference
+        MDMIsActiveTokenGenerating Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -101,34 +101,25 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MDMPlan</h1>
+            <h1>MDMIsActiveTokenGenerating</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMPlan</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="p">,</span> <span class="n">NSCopying</span><span class="o">&gt;</span></code></pre>
+                  <pre class="highlight"><code><span class="k">@protocol</span> <span class="nc">MDMIsActiveTokenGenerating</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
 
                 </div>
               </div>
-            <p>A class conforming to MDMPlan is expected to describe a plan of motion for a target.</p>
-
-<p>Plans are translated into performers by an instance of MDMScheduler.</p>
+            <p>An is-active token generator is able to generate any number of MDMIsActiveToken instances.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Defining%20the%20performer%20class"></a>
-                <a name="//apple_ref/objc/Section/Defining the performer class" class="dashAnchor"></a>
-                <a href="#/Defining%20the%20performer%20class">
-                  <h3 class="section-name">Defining the performer class</h3>
-                </a>
-              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(pl)MDMPlan(im)performerClass"></a>
-                    <a name="//apple_ref/objc/Method/-performerClass" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)MDMPlan(im)performerClass">-performerClass</a>
+                    <a name="/c:objc(pl)MDMIsActiveTokenGenerating(im)generate"></a>
+                    <a name="//apple_ref/objc/Method/-generate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)MDMIsActiveTokenGenerating(im)generate">-generate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -136,27 +127,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Asks the receiver to return a class conforming to MDMPerformer.</p>
+                        <p>Generate and return a new is-active token.</p>
 
-<p>The returned class will be instantiated by an MDMScheduler. The instantiated performer is expected to
-execute the plan.</p>
+<p>The receiver of this token is expected to eventually invoke terminate on the token.</p>
+
+<p>May fail to generate a token if the performer&rsquo;s scheduler has been deallocated.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">Class</span><span class="p">)</span><span class="n">performerClass</span><span class="p">;</span></code></pre>
+                          <pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/MDMIsActiveTokenable.html">MDMIsActiveTokenable</a></span><span class="o">&gt;</span><span class="p">)</span><span class="n">generate</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">performerClass</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyClass</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">generate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">IsActiveTokenable</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPlan.h#L35">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L121">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

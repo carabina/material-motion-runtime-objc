@@ -51,10 +51,22 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/MDMComposablePerforming.html">MDMComposablePerforming</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MDMContinuousPerforming.html">MDMContinuousPerforming</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/MDMDelegatedPerforming.html">MDMDelegatedPerforming</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols.html#/c:objc(pl)MDMDelegatedPerformingToken">MDMDelegatedPerformingToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MDMIsActiveTokenGenerating.html">MDMIsActiveTokenGenerating</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MDMIsActiveTokenable.html">MDMIsActiveTokenable</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/MDMPerforming.html">MDMPerforming</a>
@@ -67,6 +79,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/MDMSchedulerDelegate.html">MDMSchedulerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/MDMTransactionEmitting.html">MDMTransactionEmitting</a>
               </li>
             </ul>
           </li>
@@ -141,85 +156,7 @@ performer.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L87-L89">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(pl)MDMDelegatedPerforming(py)delegatedPerformanceWillStartNamed"></a>
-                    <a name="//apple_ref/objc/Property/delegatedPerformanceWillStartNamed" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)MDMDelegatedPerforming(py)delegatedPerformanceWillStartNamed">delegatedPerformanceWillStartNamed</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The performer must call this method before delegated execution begins.</p>
-
-<p>This is not recursive.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">@optional</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span>
-    <span class="n">delegatedPerformanceWillStartNamed</span><span class="p">;</span></code></pre>
-
-                        </div>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">optional</span> <span class="k">var</span> <span class="nv">delegatedPerformanceWillStartNamed</span><span class="p">:</span> <span class="p">(</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L96">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(pl)MDMDelegatedPerforming(py)delegatedPerformanceDidEndNamed"></a>
-                    <a name="//apple_ref/objc/Property/delegatedPerformanceDidEndNamed" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)MDMDelegatedPerforming(py)delegatedPerformanceDidEndNamed">delegatedPerformanceDidEndNamed</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The performer must call this method after delegated execution ends.</p>
-
-<p>This is not recursive.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight"><code><span class="k">@optional</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span>
-    <span class="n">delegatedPerformanceDidEndNamed</span><span class="p">;</span></code></pre>
-
-                        </div>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">optional</span> <span class="k">var</span> <span class="nv">delegatedPerformanceDidEndNamed</span><span class="p">:</span> <span class="p">(</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v2.0.1/src/MDMPerforming.h#L104">Show on GitHub</a>
+                        <a href="https://github.com/material-motion/material-motion-runtime-objc/tree/v3.0.1/src/MDMPerforming.h#L189-L191">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -229,8 +166,8 @@ performer.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-08-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-09-20)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

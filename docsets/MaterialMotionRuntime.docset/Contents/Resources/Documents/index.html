@@ -50,10 +50,22 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Protocols/MDMComposablePerforming.html">MDMComposablePerforming</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMContinuousPerforming.html">MDMContinuousPerforming</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/MDMDelegatedPerforming.html">MDMDelegatedPerforming</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/c:objc(pl)MDMDelegatedPerformingToken">MDMDelegatedPerformingToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMIsActiveTokenGenerating.html">MDMIsActiveTokenGenerating</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMIsActiveTokenable.html">MDMIsActiveTokenable</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MDMPerforming.html">MDMPerforming</a>
@@ -66,6 +78,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MDMSchedulerDelegate.html">MDMSchedulerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MDMTransactionEmitting.html">MDMTransactionEmitting</a>
               </li>
             </ul>
           </li>
@@ -88,19 +103,29 @@
             
             <a href='#material-motion-runtime-for-apple-devices' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='material-motion-runtime-for-apple-devices'>Material Motion Runtime for Apple Devices</h1>
 
-<p><a href="https://travis-ci.org/material-motion/material-motion-runtime-objc"><img src="https://travis-ci.org/material-motion/material-motion-runtime-objc.svg?branch=develop" alt="Build Status"></a></p>
+<p><a href="https://travis-ci.org/material-motion/material-motion-runtime-objc"><img src="https://travis-ci.org/material-motion/material-motion-runtime-objc.svg?branch=develop" alt="Build Status"></a>
+<a href="https://codecov.io/gh/material-motion/material-motion-runtime-objc"><img src="https://codecov.io/gh/material-motion/material-motion-runtime-objc/branch/develop/graph/badge.svg" alt="codecov"></a></p>
 
 <p>The Material Motion Runtime is a tool for describing motion declaratively.</p>
-<a href='#declarative-motion-aka-motion-as-data' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='declarative-motion-aka-motion-as-data'>Declarative motion, aka motion as data</h2>
+<a href='#declarative-motion-motion-as-data' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='declarative-motion-motion-as-data'>Declarative motion: motion as data</h2>
 
 <p>This library does not do much on its own. What it does do, however, is enable the expression of
-motion as data.</p>
+motion as discrete units of data that can be introspected, composed, and sent over a wire.</p>
 
 <p>This library encourages you to describe motion as data, or what we call <em>plans</em>. Plans are committed
-to a <em>scheduler</em>. The scheduler then coordinates the creation of <em>performers</em>, objects responsible
-for translating plans into concrete execution.</p>
+to a <em>scheduler</em>. A scheduler coordinates the creation of <em>performers</em>, objects responsible for
+translating plans into concrete execution.</p>
 <a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
 <a href='#installation-with-cocoapods' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='installation-with-cocoapods'>Installation with CocoaPods</h3>
+
+<blockquote>
+<p>CocoaPods is a dependency manager for Objective-C and Swift libraries. CocoaPods automates the
+process of using third-party libraries in your projects. See
+<a href="https://guides.cocoapods.org/using/getting-started.html">the Getting Started guide</a> for more
+information. You can install it with the following command:</p>
+<pre class="highlight plaintext"><code>gem install cocoapods
+</code></pre>
+</blockquote>
 
 <p>Add <code>MaterialMotionRuntime</code> to your <code>Podfile</code>:</p>
 <pre class="highlight plaintext"><code>pod 'MaterialMotionRuntime'
@@ -109,13 +134,415 @@ for translating plans into concrete execution.</p>
 <p>Then run the following command:</p>
 <pre class="highlight plaintext"><code>pod install
 </code></pre>
+<a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='usage'>Usage</h3>
+
+<p>Import the Material Motion Runtime framework:</p>
+<pre class="highlight plaintext"><code>@import MaterialMotionRuntime;
+</code></pre>
+
+<p>You will now have access to all of the APIs.</p>
 <a href='#example-apps-unit-tests' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='example-apps-unit-tests'>Example apps/unit tests</h2>
 
-<p>To check out a local copy of the repo and run our example apps you can run the following commands:</p>
+<p>Check out a local copy of the repo to access the Catalog application by running the following
+commands:</p>
 <pre class="highlight plaintext"><code>git clone https://github.com/material-motion/material-motion-runtime-objc.git
 cd material-motion-runtime-objc
 pod install
 open MaterialMotionRuntime.xcworkspace
+</code></pre>
+<a href='#guides' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='guides'>Guides</h2>
+
+<ol>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#how-to-create-a-new-plan-and-performer-type">How to define a new plan and performer type</a></li>
+<li><a href="#how-to-commit-a-plan-to-a-scheduler">How to commit a plan to a scheduler</a></li>
+<li><a href="#how-to-configure-performers-with-plans">How to configure performers with plans</a></li>
+<li><a href="#how-to-use-composition-to-fulfill-plans">How to use composition to fulfill plans</a></li>
+<li><a href="#how-to-indicate-continuous-performance">How to indicate continuous performance</a></li>
+</ol>
+<a href='#architecture' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='architecture'>Architecture</h3>
+
+<p>The Material Motion Runtime consists of two groups of APIs: a scheduler/transaction object and a
+constellation of protocols loosely consisting of plan and performing types.</p>
+<a href='#scheduler-transaction' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='scheduler-transaction'>Scheduler + Transaction</h4>
+
+<p>The <a href="https://material-motion.github.io/material-motion-runtime-objc/Classes/MDMScheduler.html">Scheduler</a>
+object is a coordinating entity whose primary responsibility is to fulfill plans by creating
+performers. You can create many schedulers throughout the lifetime of your application. A good rule
+of thumb is to have one scheduler per interaction or transition.</p>
+
+<p><a href="https://material-motion.github.io/material-motion-runtime-objc/Classes/MDMTransaction.html">Transactions</a>
+are the mechanism by which plans are committed to a scheduler. Transactions allow the runtime to
+minimize the API surface area of the scheduler while providing a vessel for plans to be transported
+within.</p>
+<a href='#plan-performing-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='plan-performing-types'>Plan + Performing types</h4>
+
+<p>The <a href="https://material-motion.github.io/material-motion-runtime-objc/Protocols/MDMPlan.html">Plan</a>
+and <a href="https://material-motion.github.io/material-motion-runtime-objc/Protocols/MDMPerforming.html">Performing</a>
+protocol each define the minimal characteristics required for an object to be considered either a
+plan or a performer, respectively, by the Material Motion Runtime.</p>
+
+<p>Plans and performers have a symbiotic relationship. A plan is executed by the performer it defines.
+Performer behavior is configured by the provided plan instances.</p>
+
+<p>Learn more about the Material Motion Runtime by reading the
+<a href="https://material-motion.gitbooks.io/material-motion-starmap/content/specifications/runtime/">Starmap</a>.</p>
+<a href='#how-to-create-a-new-plan-and-performer-type' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='how-to-create-a-new-plan-and-performer-type'>How to create a new plan and performer type</h3>
+
+<p>The following steps provide copy-pastable snippets of code.</p>
+<a href='#step-1-define-the-plan-type' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-1-define-the-plan-type'>Step 1: Define the plan type</h4>
+
+<p>Questions to ask yourself when creating a new plan type:</p>
+
+<ul>
+<li>What do I want my plan/performer to accomplish?</li>
+<li>Will my performer need many plans to achieve the desired outcome?</li>
+<li>How can I name my plan such that it clearly communicates either a <strong>behavior</strong> or a
+<strong>change in state</strong>?</li>
+</ul>
+
+<p>As general rules:</p>
+
+<ol>
+<li>Plans with an <em>-able</em> suffix alter the <strong>behavior</strong> of the target, often indefinitely. Examples:
+Draggable, Pinchable, Tossable.</li>
+<li>Plans that are <em>verbs</em> describe some <strong>change in state</strong>, often over a period of time. Examples:
+FadeIn, Tween, SpringTo.</li>
+</ol>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Plan</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">NSObject</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="err">&lt;#</span><span class="nc">Plan</span><span class="err">#</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#step-2-define-the-performer-type' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-2-define-the-performer-type'>Step 2: Define the performer type</h4>
+
+<p>Performers are responsible for fulfilling plans. Fulfillment is possible in a variety of ways:</p>
+
+<ul>
+<li><a href="https://material-motion.github.io/material-motion-runtime-objc/Protocols/MDMPlanPerforming.html">PlanPerforming</a>: <a href="#how-to-configure-performers-with-plans">How to configure performers with plans</a></li>
+<li><a href="https://material-motion.github.io/material-motion-runtime-objc/Protocols/MDMDelegatedPerforming.html">DelegatedPerforming</a></li>
+<li><a href="https://material-motion.github.io/material-motion-runtime-objc/Protocols/MDMComposablePerforming.html">ComposablePerforming</a>: <a href="#how-to-use-composition-to-fulfill-plans">How to use composition to fulfill plans</a></li>
+</ul>
+
+<p>See the associated links for more details on each performing type.</p>
+
+<blockquote>
+<p>Note: only one instance of a type of performer <strong>per target</strong> is ever created. This allows you to
+register multiple plans to the same target in order to configure a performer. See
+<a href="#how-to-configure-performers-with-plans">How to configure performers with plans</a> for more details.</p>
+</blockquote>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">NSObject</span> <span class="o">&lt;</span><span class="n">MDMPerforming</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="n">UIView</span> <span class="o">*</span><span class="n">_target</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">initWithTarget</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">target</span> <span class="p">{</span>
+  <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">([</span><span class="n">target</span> <span class="nf">isKindOfClass</span><span class="p">:[</span><span class="n">UIView</span> <span class="nf">class</span><span class="p">]]);</span>
+    <span class="n">_target</span> <span class="o">=</span> <span class="n">target</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Performing</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">target</span><span class="p">:</span> <span class="kt">UIView</span>
+  <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">target</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span> <span class="k">as!</span> <span class="kt">UIView</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#step-3-make-the-plan-type-a-formal-plan' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-3-make-the-plan-type-a-formal-plan'>Step 3: Make the plan type a formal Plan</h4>
+
+<p>Conforming to Plan requires:</p>
+
+<ol>
+<li>that you define the type of performer your plan requires, and</li>
+<li>that your plan be copyable.</li>
+</ol>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Plan</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">NSObject</span> <span class="o">&lt;</span><span class="n">MDMPlan</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="err">&lt;#</span><span class="nc">Plan</span><span class="err">#</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">Class</span><span class="p">)</span><span class="n">performerClass</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="o">&lt;</span><span class="err">#</span><span class="n">Plan</span><span class="err">#</span><span class="o">&gt;</span> <span class="nf">class</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">copyWithZone</span><span class="o">:</span><span class="p">(</span><span class="n">NSZone</span> <span class="o">*</span><span class="p">)</span><span class="n">zone</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[[[</span><span class="n">self</span> <span class="nf">class</span><span class="p">]</span> <span class="nf">allocWithZone</span><span class="p">:</span><span class="n">zone</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Plan</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">performerClass</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyClass</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;.</span><span class="k">self</span>
+  <span class="p">}</span>
+  <span class="kd">func</span> <span class="nf">copy</span><span class="p">(</span><span class="n">with</span> <span class="nv">zone</span><span class="p">:</span> <span class="kt">NSZone</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Any</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span><span class="err">#</span><span class="o">&gt;</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#how-to-commit-a-plan-to-a-scheduler' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='how-to-commit-a-plan-to-a-scheduler'>How to commit a plan to a scheduler</h3>
+<a href='#step-1-create-and-store-a-reference-to-a-scheduler-instance' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-1-create-and-store-a-reference-to-a-scheduler-instance'>Step 1: Create and store a reference to a scheduler instance</h4>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">MyClass</span> <span class="p">()</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">MDMScheduler</span><span class="o">*</span> <span class="n">scheduler</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="n">init</span><span class="p">...</span> <span class="p">{</span>
+  <span class="p">...</span>
+  <span class="n">self</span><span class="p">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="p">[</span><span class="n">MDMScheduler</span> <span class="nf">new</span><span class="p">];</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MyClass</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">scheduler</span> <span class="o">=</span> <span class="kt">Scheduler</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#step-2-create-a-new-transaction-instance-and-associate-plans-with-targets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-2-create-a-new-transaction-instance-and-associate-plans-with-targets'>Step 2: Create a new transaction instance and associate plans with targets</h4>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="n">MDMTransaction</span> <span class="o">*</span><span class="n">transaction</span> <span class="o">=</span> <span class="p">[</span><span class="n">MDMTransaction</span> <span class="nf">new</span><span class="p">];</span>
+<span class="p">[</span><span class="n">transaction</span> <span class="nf">addPlan</span><span class="p">:</span><span class="o">&lt;</span><span class="err">#</span><span class="n">Plan</span> <span class="n">instance</span><span class="err">#</span><span class="o">&gt;</span> <span class="nf">toTarget</span><span class="p">:</span><span class="o">&lt;</span><span class="err">#</span><span class="n">View</span> <span class="n">instance</span><span class="err">#</span><span class="o">&gt;</span><span class="p">];</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="kt">Transaction</span><span class="p">()</span>
+<span class="n">transaction</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="nv">plan</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span> <span class="n">instance</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">View</span> <span class="n">instance</span><span class="err">#</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre>
+<a href='#step-3-commit-the-transaction-to-the-scheduler' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-3-commit-the-transaction-to-the-scheduler'>Step 3: Commit the transaction to the scheduler</h4>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">scheduler</span> <span class="nf">commitTransaction</span><span class="p">:</span><span class="n">transaction</span><span class="p">];</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="n">scheduler</span><span class="o">.</span><span class="nf">commit</span><span class="p">(</span><span class="nv">transaction</span><span class="p">:</span> <span class="n">transaction</span><span class="p">)</span>
+</code></pre>
+<a href='#how-to-configure-performers-with-plans' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='how-to-configure-performers-with-plans'>How to configure performers with plans</h3>
+
+<p>Configuring performers with plans starts by making your performer conform to
+<a href="https://material-motion.github.io/material-motion-runtime-objc/Protocols/MDMPlanPerforming.html">PlanPerforming</a>.</p>
+
+<p>PlanPerforming requires that you implement the <code>addPlan:</code> method. This method will be called on a
+performer each time a plan is committed to the scheduler that expects to be fulfilled by the
+performer.</p>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">PlanPerforming</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">MDMPlanPerforming</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">PlanPerforming</span><span class="p">)</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">addPlan</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">MDMPlan</span><span class="o">&gt;</span><span class="p">)</span><span class="n">plan</span> <span class="p">{</span>
+  <span class="o">&lt;</span><span class="err">#</span><span class="n">Plan</span><span class="err">#</span><span class="o">&gt;*</span> <span class="o">&lt;</span><span class="err">#</span><span class="n">casted</span> <span class="n">plan</span> <span class="n">instance</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">plan</span><span class="p">;</span>
+
+  <span class="c1">// Do something with the plan.
+</span><span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">PlanPerforming</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">add</span><span class="p">(</span><span class="nv">plan</span><span class="p">:</span> <span class="kt">Plan</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="o">&lt;</span><span class="err">#</span><span class="n">casted</span> <span class="n">plan</span> <span class="n">instance</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">plan</span> <span class="k">as!</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span><span class="err">#</span><span class="o">&gt;</span>
+
+    <span class="c1">// Do something with the plan.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><strong><em>Handling multiple plan types in Swift:</em></strong></p>
+
+<p>Make use of Swift&rsquo;s typed switch/casing to handle multiple plan types.</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">add</span><span class="p">(</span><span class="nv">plan</span><span class="p">:</span> <span class="kt">Plan</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="n">plan</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="kd">let</span> <span class="o">&lt;</span><span class="err">#</span><span class="n">plan</span> <span class="n">instance</span> <span class="mi">1</span><span class="err">#</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span> <span class="n">type</span> <span class="mi">1</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="p">()</span>
+
+  <span class="k">case</span> <span class="kd">let</span> <span class="o">&lt;</span><span class="err">#</span><span class="n">plan</span> <span class="n">instance</span> <span class="mi">2</span><span class="err">#</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span> <span class="n">type</span> <span class="mi">2</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="p">()</span>
+
+  <span class="k">case</span> <span class="k">is</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Plan</span> <span class="n">type</span> <span class="mi">3</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="p">()</span>
+
+  <span class="k">default</span><span class="p">:</span>
+    <span class="nf">assert</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#how-to-use-composition-to-fulfill-plans' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='how-to-use-composition-to-fulfill-plans'>How to use composition to fulfill plans</h3>
+
+<p>A composition performer is able to emit new transactions using an emitter object. This feature
+enables the reuse of plans and the creation of higher-order abstractions.</p>
+<a href='#step-1-conform-to-composableperforming-and-store-the-transaction-emitter' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-1-conform-to-composableperforming-and-store-the-transaction-emitter'>Step 1: Conform to ComposablePerforming and store the transaction emitter</h4>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">()</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">MDMTransactionEmitting</span><span class="o">&gt;</span> <span class="n">transactionEmitter</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">Composition</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">MDMComposablePerforming</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">Composition</span><span class="p">)</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setTransactionEmitter</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">MDMTransactionEmitting</span><span class="o">&gt;</span><span class="p">)</span><span class="n">transactionEmitter</span> <span class="p">{</span>
+  <span class="n">self</span><span class="p">.</span><span class="n">transactionEmitter</span> <span class="o">=</span> <span class="n">transactionEmitter</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="c1">// Store the emitter in your class' definition.</span>
+<span class="kd">class</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">...</span> <span class="p">{</span>
+  <span class="o">...</span>
+  <span class="k">var</span> <span class="nv">emitter</span><span class="p">:</span> <span class="kt">TransactionEmitting</span><span class="o">!</span>
+  <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">ComposablePerforming</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">transactionEmitter</span><span class="p">:</span> <span class="kt">TransactionEmitting</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">emitter</span> <span class="o">=</span> <span class="n">transactionEmitter</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#step-2-emit-transactions-using-the-emitter' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-2-emit-transactions-using-the-emitter'>Step 2: Emit transactions using the emitter</h4>
+
+<p>As a general practice performers should only associate plans with their target. If you find that a
+performer needs to associate plans with more than one target, you may want to consider whether a
+<a href="https://material-motion.gitbooks.io/material-motion-starmap/content/specifications/directors.html">director</a>
+is a more applicable place to put this logic.</p>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="n">MDMTransaction</span> <span class="o">*</span><span class="n">transaction</span> <span class="o">=</span> <span class="p">[</span><span class="n">MDMTransaction</span> <span class="nf">new</span><span class="p">];</span>
+<span class="p">[</span><span class="n">transaction</span> <span class="nf">addPlan</span><span class="p">:</span><span class="o">&lt;</span><span class="err">#</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">MDMPlan</span><span class="o">&gt;</span><span class="p">)</span><span class="err">#</span><span class="o">&gt;</span> <span class="nf">toTarget</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">target</span><span class="p">];</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">transactionEmitter</span> <span class="nf">emitTransaction</span><span class="p">:</span><span class="n">transaction</span><span class="p">];</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">transaction</span> <span class="o">=</span> <span class="kt">Transaction</span><span class="p">()</span>
+<span class="n">transaction</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="nv">plan</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">Plan</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">emitter</span><span class="o">.</span><span class="nf">emit</span><span class="p">(</span><span class="nv">transaction</span><span class="p">:</span> <span class="n">transaction</span><span class="p">)</span>
+</code></pre>
+<a href='#how-to-indicate-continuous-performance' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='how-to-indicate-continuous-performance'>How to indicate continuous performance</h3>
+
+<p>Oftentimes performers will perform their actions over a period of time or while an interaction is
+active. These types of performers are called continuous performers.</p>
+
+<p>A continuous performer is able to affect the active state of the scheduler by generating is-active
+tokens. The scheduler is considered active so long as an is-active token exists and has not been
+terminated. Continuous performers are expected to terminate a token when its corresponding work has
+completed.</p>
+
+<p>For example, a performer that registers a platform animation might generate a token when the
+animation starts. When the animation completes the token would be terminated.</p>
+<a href='#step-1-conform-to-continuousperforming-and-store-the-token-generator' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-1-conform-to-continuousperforming-and-store-the-token-generator'>Step 1: Conform to ContinuousPerforming and store the token generator</h4>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">()</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n">MDMIsActiveTokenGenerating</span><span class="o">&gt;</span> <span class="n">tokenGenerator</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@interface</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">Composition</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">MDMComposablePerforming</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="err">&lt;#</span><span class="nc">Performer</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">Composition</span><span class="p">)</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setIsActiveTokenGenerator</span><span class="o">:</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">MDMIsActiveTokenGenerating</span><span class="o">&gt;</span><span class="p">)</span><span class="n">isActiveTokenGenerator</span> <span class="p">{</span>
+  <span class="n">self</span><span class="p">.</span><span class="n">tokenGenerator</span> <span class="o">=</span> <span class="n">isActiveTokenGenerator</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="c1">// Store the emitter in your class' definition.</span>
+<span class="kd">class</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">...</span> <span class="p">{</span>
+  <span class="o">...</span>
+  <span class="k">var</span> <span class="nv">tokenGenerator</span><span class="p">:</span> <span class="kt">IsActiveTokenGenerating</span><span class="o">!</span>
+  <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">Performer</span><span class="err">#</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">ContinuousPerforming</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">isActiveTokenGenerator</span><span class="p">:</span> <span class="kt">IsActiveTokenGenerating</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tokenGenerator</span> <span class="o">=</span> <span class="n">isActiveTokenGenerator</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#step-2-generate-a-token-when-some-continuous-work-has-started' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-2-generate-a-token-when-some-continuous-work-has-started'>Step 2: Generate a token when some continuous work has started</h4>
+
+<p>You will likely need to store the token in order to be able to reference it at a later point.</p>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="n">id</span><span class="o">&lt;</span><span class="n">MDMIsActiveTokenable</span><span class="o">&gt;</span> <span class="n">token</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tokenGenerator</span> <span class="nf">generate</span><span class="p">];</span>
+<span class="n">tokenMap</span><span class="p">[</span><span class="nf">animation</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span><span class="p">;</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">token</span> <span class="o">=</span> <span class="n">tokenGenerator</span><span class="o">.</span><span class="nf">generate</span><span class="p">()</span><span class="o">!</span>
+<span class="n">tokenMap</span><span class="p">[</span><span class="n">animation</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+</code></pre>
+<a href='#step-3-terminate-the-token-when-work-has-completed' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-3-terminate-the-token-when-work-has-completed'>Step 3: Terminate the token when work has completed</h4>
+
+<p>Code snippets:</p>
+
+<p><strong><em>In Objective-C:</em></strong></p>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">token</span> <span class="nf">terminate</span><span class="p">];</span>
+</code></pre>
+
+<p><strong><em>In Swift:</em></strong></p>
+<pre class="highlight swift"><code><span class="n">token</span><span class="o">.</span><span class="nf">terminate</span><span class="p">()</span>
 </code></pre>
 <a href='#contributing' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='contributing'>Contributing</h2>
 
@@ -126,145 +553,6 @@ open MaterialMotionRuntime.xcworkspace
 <p>Learn more about <a href="https://material-motion.gitbooks.io/material-motion-team/content/">our team</a>,
 <a href="https://material-motion.gitbooks.io/material-motion-team/content/community/">our community</a>, and
 our <a href="https://material-motion.gitbooks.io/material-motion-team/content/essentials/">contributor essentials</a>.</p>
-<a href='#architecture' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='architecture'>Architecture</h2>
-
-<p>This library defines two protocols:</p>
-
-<ul>
-<li>MDMPlan</li>
-<li>MDMPerforming</li>
-</ul>
-
-<p>and provides two object implementations:</p>
-
-<ul>
-<li>MDMTransaction</li>
-<li>MDMScheduler</li>
-</ul>
-
-<p>Learn more about these APIs by reading our <a href="https://material-motion.gitbooks.io/material-motion-starmap/content/specifications/runtime/">Starmap</a>.</p>
-<a href='#life-of-a-plan-objective-c' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='life-of-a-plan-objective-c'>Life of a plan: Objective-C</h3>
-
-<p>The first step to describing motion declaratively is to define your plans.</p>
-
-<p>Let&rsquo;s say we want to describe a view as <q>draggable</q>.</p>
-<a href='#step-1-define-the-plan' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-1-define-the-plan'>Step 1: Define the plan</h4>
-
-<p>First, we create a new file pair called Draggable.h/m.</p>
-
-<p>In Draggable.h:</p>
-<pre class="highlight objective_c"><code><span class="k">@import</span> <span class="n">MaterialMotionRuntime</span><span class="p">;</span>
-
-<span class="k">@interface</span> <span class="nc">Draggable</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">MDMPlan</span><span class="o">&gt;</span>
-<span class="k">@end</span>
-</code></pre>
-
-<p>In Draggable.m:</p>
-<pre class="highlight objective_c"><code><span class="k">@implementation</span> <span class="nc">Draggable</span>
-<span class="k">@end</span>
-</code></pre>
-<a href='#step-2-define-the-performer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-2-define-the-performer'>Step 2: Define the performer</h4>
-
-<p>We now define the performer object that will fulfill our Draggable plan.</p>
-
-<p>We map the plan to the performer by implementing the <code>performerClass</code> method on the plan.</p>
-
-<p>In Draggable.m:</p>
-<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">DraggablePerformer</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">MDMPerforming</span><span class="o">&gt;</span>
-<span class="k">@end</span>
-
-<span class="k">@implementation</span> <span class="nc">Draggable</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="n">Class</span><span class="p">)</span><span class="n">performerClass</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">[</span><span class="n">DraggablePerformer</span> <span class="nf">class</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-
-<span class="k">@implementation</span> <span class="nc">DraggablePerformer</span>
-<span class="k">@end</span>
-</code></pre>
-<a href='#step-3-implement-the-performer' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-3-implement-the-performer'>Step 3: Implement the performer</h4>
-
-<p>We start by implementing the required <code>initWithTarget:</code> initializer from MDMPerforming. In this
-initializer we register a pan gesture recognizer with the view.</p>
-
-<blockquote>
-<p>In practice we&rsquo;ll usually want to provide the gesture recognizer to the performer via the plan.
-This allows the creator of the plan to also pick which view the gesture recognizer is attached to.</p>
-</blockquote>
-
-<p>In Draggable.m:</p>
-<pre class="highlight objective_c"><code><span class="k">@implementation</span> <span class="nc">DraggablePerformer</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithTarget</span><span class="p">:(</span><span class="n">UIView</span> <span class="o">*</span><span class="p">)</span><span class="nv">target</span> <span class="p">{</span>
-  <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">UIPanGestureRecognizer</span> <span class="o">*</span><span class="n">pan</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIPanGestureRecognizer</span> <span class="nf">new</span><span class="p">];</span>
-    <span class="p">[</span><span class="n">pan</span> <span class="nf">addTarget</span><span class="p">:</span><span class="n">self</span> <span class="nf">action</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">gestureDidChange</span><span class="p">:)];</span>
-    <span class="p">[</span><span class="n">target</span> <span class="nf">addGestureRecognizer</span><span class="p">:</span><span class="n">pan</span><span class="p">];</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</code></pre>
-
-<p>We also implement the <code>gestureDidChange:</code> method. This method will be called whenever the user
-interacts with the target view.</p>
-
-<p>Note: The implementation shown below is only one of many ways such a performer could be implemented.</p>
-
-<p>In Draggable.m:</p>
-<pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">DraggablePerformer</span> <span class="p">()</span>
-<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">CGPoint</span> <span class="n">initialGestureLocation</span><span class="p">;</span>
-<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">CGPoint</span> <span class="n">initialTargetPosition</span><span class="p">;</span>
-<span class="k">@end</span>
-
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">gestureDidChange</span><span class="o">:</span><span class="p">(</span><span class="n">UIGestureRecognizer</span> <span class="o">*</span><span class="p">)</span><span class="n">gesture</span> <span class="p">{</span>
-  <span class="k">switch</span> <span class="p">(</span><span class="n">gesture</span><span class="p">.</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">UIGestureRecognizerStateBegan</span><span class="p">:</span>
-      <span class="n">self</span><span class="p">.</span><span class="n">initialGestureLocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">gesture</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">superview</span><span class="p">];</span>
-      <span class="n">self</span><span class="p">.</span><span class="n">initialTargetPosition</span> <span class="o">=</span> <span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
-      <span class="k">break</span><span class="p">;</span>
-
-    <span class="k">case</span> <span class="n">UIGestureRecognizerStateChanged</span><span class="p">:</span> <span class="p">{</span>
-      <span class="n">CGPoint</span> <span class="n">currentLocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">gesture</span> <span class="nf">locationInView</span><span class="p">:</span><span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">superview</span><span class="p">];</span>
-      <span class="n">CGVector</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">CGVectorMake</span><span class="p">(</span><span class="n">currentLocation</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">initialGestureLocation</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
-                                    <span class="n">currentLocation</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">initialGestureLocation</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
-      <span class="n">CGPoint</span> <span class="n">newPosition</span> <span class="o">=</span> <span class="n">CGPointMake</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">initialTargetPosition</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">delta</span><span class="p">.</span><span class="n">dx</span><span class="p">,</span>
-                                        <span class="n">self</span><span class="p">.</span><span class="n">initialTargetPosition</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">delta</span><span class="p">.</span><span class="n">dy</span><span class="p">);</span>
-      <span class="n">gesture</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span><span class="p">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">newPosition</span><span class="p">;</span>
-      <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">default</span><span class="o">:</span>
-      <span class="k">break</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-<a href='#step-4-associate-plans-with-views' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-4-associate-plans-with-views'>Step 4: Associate plans with views</h4>
-
-<p>Create and retain a reference to a scheduler, likely in your view controller:</p>
-<pre class="highlight plaintext"><code>self.scheduler = [MDMScheduler new];
-</code></pre>
-
-<p>Create a transaction. Plans are added to transactions. Transactions are committed to schedulers.</p>
-<pre class="highlight plaintext"><code>MDMTransaction *transaction = [MDMTransaction new];
-[transaction addPlan:[Draggable new] toTarget:view];
-</code></pre>
-
-<p>Commit the transaction to the scheduler.</p>
-<pre class="highlight plaintext"><code>[self.scheduler commitTransaction:transaction];
-</code></pre>
-<a href='#step-5-test-it' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='step-5-test-it'>Step 5: Test it!</h4>
-
-<p>You can now drag your view around.</p>
-<a href='#next-steps' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='next-steps'>Next steps</h2>
-
-<ul>
-<li>Create your own family of plans/performers.</li>
-</ul>
 <a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
 
 <p>Licensed under the Apache 2.0 license. See LICENSE for details.</p>
@@ -272,8 +560,8 @@ interacts with the target view.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-08-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2016 <a class="link" href="https://github.com/material-motion/material-motion-runtime-objc" target="_blank" rel="external">The Material Motion Authors.</a>. All rights reserved. (Last updated: 2016-09-20)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
